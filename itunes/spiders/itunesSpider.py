@@ -16,7 +16,7 @@ class ItunesspiderSpider(Spider):
     name = "itunesSpider"
     allowed_domains = ["itunes.apple.com"]
     start_urls = (
-        "https://itunes.apple.com/us/genre/podcasts/id26?mt=2",
+        "https://itunes.apple.com/de/genre/podcasts/id26?mt=2",
     )
 
     def parse(self, response):
@@ -53,8 +53,19 @@ class ItunesspiderSpider(Spider):
         sel = Selector(response)
         urls = sel.css("div#selectedcontent div ul li a::attr(href)").extract()
         names = sel.css("div#selectedcontent div ul li a::text").extract()
-
+        
         for url, name in zip(urls, names):
-            _id = get_id_from_url(url)
-            item = ItunesItem(name=name, url=url, itunesId=_id)
-            yield item
+            somearg = name
+            yield Request(url, meta={'somearg':somearg}, callback=self.parse_podcast)
+
+    def parse_podcast(self, response):        
+        url = response.url
+        name = response.meta['somearg']
+        
+        lang=response.xpath('//li[@class="language"]//text()').extract()[1]
+
+        _id = get_id_from_url(url)
+        item = ItunesItem(name=name, url=url, itunesId=_id, language=lang)
+        print lang + ": " + name
+        yield item
+        
