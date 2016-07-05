@@ -12,3 +12,4 @@ class ItunesItem(Item):
     name = Field()
     url = Field()
     itunesId = Field()
+    language = Field()
