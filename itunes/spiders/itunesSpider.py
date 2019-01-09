@@ -16,7 +16,7 @@ class ItunesspiderSpider(Spider):
     name = "itunesSpider"
     allowed_domains = ["itunes.apple.com"]
     start_urls = (
-        "https://itunes.apple.com/de/genre/podcasts/id26?mt=2",
+        "https://itunes.apple.com/us/genre/podcasts/id26?mt=2",
     )
 
     def parse(self, response):
