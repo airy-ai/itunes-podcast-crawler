@@ -5,7 +5,7 @@ Extract podcast from itunes
 
 1) create a virtualenv and activate
 
-2) pip install requirements.txt
+2) pip install -r requirements.txt
 
 3) python crawl.py scrapy ## will download podcast names from itunes pages
 
